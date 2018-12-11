@@ -1,0 +1,33 @@
+DROP TABLE IF EXISTS nfa_csv_2018 CASCADE;
+
+CREATE TABLE nfa_csv_2018
+(
+   country         varchar(100),
+   year            integer,
+   country_code    integer,
+   record          varchar(100),
+   crop_land       varchar(100),
+   grazing_land    varchar(100),
+   forest_land     varchar(100),
+   fishing_ground  varchar(100),
+   built_up_land   varchar(100),
+   carbon          varchar(100),
+   total           varchar(100),
+   qscore          varchar(100)
+);
+
+
+copy nfa_csv_2018
+from 's3://mydatabucketsrc/'
+iam_role 'arn:aws:iam::884652343598:role/myRedshiftRole'
+region 'us-east-1'
+IGNOREHEADER 1
+Delimiter as ','
+REMOVEQUOTES
+
+
+
+select count(*) from nfa_csv_2018;
+
+
+select * from stl_load_errors order by starttime desc
